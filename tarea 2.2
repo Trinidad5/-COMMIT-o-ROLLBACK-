@@ -1,0 +1,46 @@
+CREATE TABLE grupos (
+
+    id_grupo INT PRIMARY KEY,
+    cupo INT NOT null
+    
+);
+
+CREATE TABLE inscripciones (
+
+
+
+    id_inscripcion INT PRIMARY KEY,
+    id_estudiante INT NOT NULL,
+    id_grupo INT NOT null
+    
+
+    
+);
+
+
+CREATE TABLE pagos (
+    id_pago INT PRIMARY KEY,
+    id_inscripcion INT NOT NULL,
+    monto NUMERIC(10,2) NOT NULL CHECK (monto > 0)
+    
+    
+);
+
+
+INSERT INTO grupos VALUES (1, 10);
+
+BEGIN;
+UPDATE grupos SET cupo = cupo - 1 WHERE id_grupo = 1;
+INSERT INTO inscripciones VALUES (1, 1, 1);
+INSERT INTO pagos VALUES (1, 1, 1500);
+COMMIT;
+
+BEGIN;
+UPDATE grupos SET cupo = cupo - 1 WHERE id_grupo = 1;
+INSERT INTO inscripciones VALUES (2, 1, 1);
+INSERT INTO pagos VALUES (2, 2, -500);
+ROLLBACK;
+
+SELECT * FROM grupos;
+SELECT * FROM inscripciones;
+SELECT * FROM pagos;
